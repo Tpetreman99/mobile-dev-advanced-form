@@ -5,17 +5,29 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        headerTintColor: '050206',
-        headerStyle: {
-          backgroundColor: '#FFFFFF',
-        },
-
+        headerShown:false,
+        
         tabBarActiveTintColor: '#050206',
+        tabBarInactiveTintColor: '#3B3B3B',
+
+        //bottom navigation bar styling
         tabBarStyle: {
-          backgroundColor: '#FFFFFF',
+          backgroundColor: 'transparent',
+          position: 'absolute',
+          borderTopWidth: 0,
+          height: 80,
+          paddingBottom: 10,
+          paddingTop: 17,
         },
 
         tabBarLabelStyle: {
+          fontSize: 10,
+          marginTop: 4,
+          paddingBottom: 2,
+        },
+
+        //bottom navigation bar component placement
+        tabBarItemStyle: {
           justifyContent: "center",
           alignItems: "center"
         }
