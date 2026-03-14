@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { useRouter } from "expo-router";
 
 const EmployeeSchema = Yup.object().shape({
   fullName: Yup.string()
@@ -31,6 +32,7 @@ const EmployeeSchema = Yup.object().shape({
 });
 
 export default function EmployeeFormScreen() {
+  const router = useRouter();
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.content}>
@@ -59,7 +61,9 @@ export default function EmployeeFormScreen() {
           }) => (
             <>
               <View style={styles.topBar}>
-                <Text style={styles.backText}>← BACK</Text>
+                <Pressable onPress={() => router.back()}>
+                  <Text style={styles.backText}>← BACK</Text>
+                </Pressable>
                 <Text style={styles.menuText}>EMPLOYEE FORM</Text>
               </View>
 
