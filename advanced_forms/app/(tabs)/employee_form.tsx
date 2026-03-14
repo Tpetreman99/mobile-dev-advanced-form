@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   SafeAreaView,
   ScrollView,
@@ -7,6 +7,7 @@ import {
   TextInput,
   View,
   Pressable,
+  Alert,
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -31,11 +32,23 @@ const EmployeeSchema = Yup.object().shape({
     .required("Department is required"),
 });
 
+type FieldName =
+  | "fullName"
+  | "email"
+  | "phone"
+  | "employeeId"
+  | "department";
+
 export default function EmployeeFormScreen() {
   const router = useRouter();
+  const [focusedField, setFocusedField] = useState<FieldName | null>(null);
+
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.content}>
+      <ScrollView
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+      >
         <Formik
           initialValues={{
             fullName: "",
@@ -47,6 +60,7 @@ export default function EmployeeFormScreen() {
           validationSchema={EmployeeSchema}
           onSubmit={(values, { resetForm }) => {
             console.log("Employee Form Submitted:", values);
+            Alert.alert("Success", "Employee information submitted successfully.");
             resetForm();
           }}
         >
@@ -67,22 +81,30 @@ export default function EmployeeFormScreen() {
                 <Text style={styles.menuText}>EMPLOYEE FORM</Text>
               </View>
 
-              <Text style={styles.heading}>Employee Info</Text>
+              <Text style={styles.heading}>Employee Information</Text>
 
               <Text style={styles.introText}>
-                Fill out the employee information form below. All fields are
-                required and must meet the validation rules before submission.
+                Please complete the employee information form below. All fields
+                are required before submission.
               </Text>
 
               <View style={styles.formGroup}>
                 <Text style={styles.label}>Full Name</Text>
                 <TextInput
-                  style={styles.input}
+                  style={[
+                    styles.input,
+                    focusedField === "fullName" && styles.inputFocused,
+                    touched.fullName && errors.fullName && styles.inputError,
+                  ]}
                   placeholder="Enter full name"
                   placeholderTextColor="#9A8174"
                   value={values.fullName}
                   onChangeText={handleChange("fullName")}
-                  onBlur={handleBlur("fullName")}
+                  onBlur={(e) => {
+                    handleBlur("fullName")(e);
+                    setFocusedField(null);
+                  }}
+                  onFocus={() => setFocusedField("fullName")}
                 />
                 {touched.fullName && errors.fullName && (
                   <Text style={styles.errorText}>{errors.fullName}</Text>
@@ -92,14 +114,22 @@ export default function EmployeeFormScreen() {
               <View style={styles.formGroup}>
                 <Text style={styles.label}>Email</Text>
                 <TextInput
-                  style={styles.input}
+                  style={[
+                    styles.input,
+                    focusedField === "email" && styles.inputFocused,
+                    touched.email && errors.email && styles.inputError,
+                  ]}
                   placeholder="Enter email"
                   placeholderTextColor="#9A8174"
                   keyboardType="email-address"
                   autoCapitalize="none"
                   value={values.email}
                   onChangeText={handleChange("email")}
-                  onBlur={handleBlur("email")}
+                  onBlur={(e) => {
+                    handleBlur("email")(e);
+                    setFocusedField(null);
+                  }}
+                  onFocus={() => setFocusedField("email")}
                 />
                 {touched.email && errors.email && (
                   <Text style={styles.errorText}>{errors.email}</Text>
@@ -109,13 +139,21 @@ export default function EmployeeFormScreen() {
               <View style={styles.formGroup}>
                 <Text style={styles.label}>Phone Number</Text>
                 <TextInput
-                  style={styles.input}
+                  style={[
+                    styles.input,
+                    focusedField === "phone" && styles.inputFocused,
+                    touched.phone && errors.phone && styles.inputError,
+                  ]}
                   placeholder="Enter 10-digit phone number"
                   placeholderTextColor="#9A8174"
                   keyboardType="number-pad"
                   value={values.phone}
                   onChangeText={handleChange("phone")}
-                  onBlur={handleBlur("phone")}
+                  onBlur={(e) => {
+                    handleBlur("phone")(e);
+                    setFocusedField(null);
+                  }}
+                  onFocus={() => setFocusedField("phone")}
                 />
                 {touched.phone && errors.phone && (
                   <Text style={styles.errorText}>{errors.phone}</Text>
@@ -125,12 +163,20 @@ export default function EmployeeFormScreen() {
               <View style={styles.formGroup}>
                 <Text style={styles.label}>Employee ID</Text>
                 <TextInput
-                  style={styles.input}
+                  style={[
+                    styles.input,
+                    focusedField === "employeeId" && styles.inputFocused,
+                    touched.employeeId && errors.employeeId && styles.inputError,
+                  ]}
                   placeholder="Enter employee ID"
                   placeholderTextColor="#9A8174"
                   value={values.employeeId}
                   onChangeText={handleChange("employeeId")}
-                  onBlur={handleBlur("employeeId")}
+                  onBlur={(e) => {
+                    handleBlur("employeeId")(e);
+                    setFocusedField(null);
+                  }}
+                  onFocus={() => setFocusedField("employeeId")}
                 />
                 {touched.employeeId && errors.employeeId && (
                   <Text style={styles.errorText}>{errors.employeeId}</Text>
@@ -140,12 +186,20 @@ export default function EmployeeFormScreen() {
               <View style={styles.formGroup}>
                 <Text style={styles.label}>Department</Text>
                 <TextInput
-                  style={styles.input}
+                  style={[
+                    styles.input,
+                    focusedField === "department" && styles.inputFocused,
+                    touched.department && errors.department && styles.inputError,
+                  ]}
                   placeholder="Enter department"
                   placeholderTextColor="#9A8174"
                   value={values.department}
                   onChangeText={handleChange("department")}
-                  onBlur={handleBlur("department")}
+                  onBlur={(e) => {
+                    handleBlur("department")(e);
+                    setFocusedField(null);
+                  }}
+                  onFocus={() => setFocusedField("department")}
                 />
                 {touched.department && errors.department && (
                   <Text style={styles.errorText}>{errors.department}</Text>
@@ -198,7 +252,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
   heading: {
-    fontSize: 40,
+    fontSize: 36,
     fontWeight: "700",
     color: "#050206",
     marginBottom: 12,
@@ -207,24 +261,33 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#3B3B3B",
     lineHeight: 22,
-    marginBottom: 28,
+    marginBottom: 30,
     maxWidth: "95%",
   },
   formGroup: {
     marginBottom: 22,
   },
   label: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: "600",
     color: "#050206",
     marginBottom: 8,
+    letterSpacing: 0.3,
   },
   input: {
     borderBottomWidth: 1,
     borderBottomColor: "#D8D2CD",
-    paddingVertical: 10,
+    paddingVertical: 12,
     fontSize: 16,
     color: "#050206",
+    backgroundColor: "#FFFFFF",
+  },
+  inputFocused: {
+    borderBottomColor: "#9A8174",
+    borderBottomWidth: 2,
+  },
+  inputError: {
+    borderBottomColor: "#B00020",
   },
   errorText: {
     marginTop: 6,
@@ -232,7 +295,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   submitButton: {
-    marginTop: 24,
+    marginTop: 28,
     backgroundColor: "#050206",
     paddingVertical: 16,
     borderRadius: 14,
