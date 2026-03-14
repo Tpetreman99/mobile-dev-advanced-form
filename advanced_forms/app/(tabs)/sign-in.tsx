@@ -12,8 +12,8 @@ const SignInSchema = Yup.object().shape({
     .min(5, "Password doesn't meet 5 character minimum")
     .required("Password is required"),
   confirmPassword: Yup.string()
-  .oneOf([Yup.ref("password")], "Passwords must match")
-  .required("Please confirm your password"),
+    .oneOf([Yup.ref("password")], "Passwords must match")
+    .required("Please confirm your password"),
 });
 
 export default function SignIn() {
