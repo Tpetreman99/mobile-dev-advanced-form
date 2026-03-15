@@ -1,12 +1,6 @@
 import React from "react";
 import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  Pressable,
+  SafeAreaView, ImageBackground, ScrollView, StyleSheet, Text, TextInput, View, Pressable
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -23,136 +17,145 @@ const SignUpSchema = Yup.object().shape({
     .min(5, "Password doesn't meet 5 character minimum")
     .required("Password is required"),
   confirmPassword: Yup.string()
-  .oneOf([Yup.ref("password")], "Passwords must match")
-  .required("Please confirm your password"),
+    .oneOf([Yup.ref("password")], "Passwords must match")
+    .required("Please confirm your password"),
 });
 
 export default function SignUp() {
   const router = useRouter();
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.content}>
-        <Formik
-          initialValues={{
-            fullName: "",
-            email: "",
-            password: "",
-            confirmPassword: "",
-          }}
-          validationSchema={SignUpSchema}
-          onSubmit={(values, { resetForm }) => {
-            console.log("New user created with these credentials:", values);
-            resetForm();
-          }}
-        >
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            values,
-            errors,
-            touched,
-            isValid,
-          }) => (
-            <>
-              <View style={styles.topBar}>
-                <Pressable onPress={() => router.back()}>
-                  <Text style={styles.backText}>← BACK</Text>
-                </Pressable>
-                <Text style={styles.menuText}>Sign-up</Text>
-              </View>
+    <ImageBackground
+      source={require("../../assets/images/landingpage.avif")}
+      style={styles.backgroundImage}
+      resizeMode="cover">
+      <View style={styles.overlay}>
+        <SafeAreaView style={styles.container}>
+          <ScrollView contentContainerStyle={styles.content}>
+            {/* validation setup */}
+            <Formik
+              initialValues={{
+                fullName: "",
+                email: "",
+                password: "",
+                confirmPassword: "",
+              }}
+              validationSchema={SignUpSchema}
+              onSubmit={(values, { resetForm }) => {
+                console.log("New user created with these credentials:", values);
+                resetForm();
+              }}
+            >
+              {({
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                values,
+                errors,
+                touched,
+                isValid,
+              }) => (
+                <>
+                {/* main header area */}
+                  <View style={styles.topBar}>
+                    <Pressable onPress={() => router.back()}>
+                      <Text style={styles.backText}>← BACK</Text>
+                    </Pressable>
+                    <Text style={styles.menuText}>Sign-up</Text>
+                  </View>
 
-              <Text style={styles.heading}>Sign-up</Text>
+                  <Text style={styles.heading}>Sign-up</Text>
 
-              <Text style={styles.introText}>
-                Fill out the form below. All fields are
-                required and must meet the validation rules before submission.
-              </Text>
-
-              <View style={styles.formGroup}>
-                <Text style={styles.label}>Full Name</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Enter full name"
-                  placeholderTextColor="#9A8174"
-                  value={values.fullName}
-                  onChangeText={handleChange("fullName")}
-                  onBlur={handleBlur("fullName")}
-                />
-                {touched.fullName && errors.fullName && (
-                  <Text style={styles.errorText}>{errors.fullName}</Text>
-                )}
-              </View>
-
-              <View style={styles.formGroup}>
-                <Text style={styles.label}>Email</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Enter email"
-                  placeholderTextColor="#9A8174"
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  value={values.email}
-                  onChangeText={handleChange("email")}
-                  onBlur={handleBlur("email")}
-                />
-                {touched.email && errors.email && (
-                  <Text style={styles.errorText}>{errors.email}</Text>
-                )}
-              </View>
-
-              <View style={styles.formGroup}>
-                <Text style={styles.label}>Password</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Enter password (minimum 5 characters"
-                  placeholderTextColor="#9A8174"
-                  value={values.password}
-                  onChangeText={handleChange("password")}
-                  onBlur={handleBlur("password")}
-                />
-                {touched.password && errors.password && (
-                  <Text style={styles.errorText}>{errors.password}</Text>
-                )}
-              </View>
-
-              <View style={styles.formGroup}>
-                <Text style={styles.label}>Confirm Password</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Confirm password"
-                  placeholderTextColor="#9A8174"
-                  value={values.confirmPassword}
-                  onChangeText={handleChange("confirmPassword")}
-                  onBlur={handleBlur("confirmPassword")}
-                />
-                {touched.confirmPassword && errors.confirmPassword && (
-                  <Text style={styles.errorText}>{errors.confirmPassword}</Text>
-                )}
-              </View>
-
-              <Pressable
-                style={[
-                  styles.submitButton,
-                  !isValid && styles.submitButtonDisabled,
-                ]}
-                onPress={() => handleSubmit()}
-                disabled={!isValid}
-              >
-                <Text style={styles.submitText}>SUBMIT</Text>
-              </Pressable>
-            </>
-          )}
-        </Formik>
-      </ScrollView>
-    </SafeAreaView>
+                  <Text style={styles.introText}>
+                    Fill out the form below. All fields are
+                    required and must meet the validation rules before submission.
+                  </Text>
+                  {/* full name field */}
+                  <View style={styles.formGroup}>
+                    <Text style={styles.label}>Full Name</Text>
+                    <TextInput
+                      style={styles.input}
+                      placeholder="Enter full name"
+                      placeholderTextColor="#9A8174"
+                      value={values.fullName}
+                      onChangeText={handleChange("fullName")}
+                      onBlur={handleBlur("fullName")}
+                    />
+                    {touched.fullName && errors.fullName && (
+                      <Text style={styles.errorText}>{errors.fullName}</Text>
+                    )}
+                  </View>
+                  {/* email field */}
+                  <View style={styles.formGroup}>
+                    <Text style={styles.label}>Email</Text>
+                    <TextInput
+                      style={styles.input}
+                      placeholder="Enter email"
+                      placeholderTextColor="#9A8174"
+                      keyboardType="email-address"
+                      value={values.email}
+                      onChangeText={handleChange("email")}
+                      onBlur={handleBlur("email")}
+                    />
+                    {touched.email && errors.email && (
+                      <Text style={styles.errorText}>{errors.email}</Text>
+                    )}
+                  </View>
+                  {/* password field */}
+                  <View style={styles.formGroup}>
+                    <Text style={styles.label}>Password</Text>
+                    <TextInput
+                      style={styles.input}
+                      placeholder="Enter password (minimum 5 characters)"
+                      placeholderTextColor="#9A8174"
+                      secureTextEntry
+                      value={values.password}
+                      onChangeText={handleChange("password")}
+                      onBlur={handleBlur("password")}
+                    />
+                    {touched.password && errors.password && (
+                      <Text style={styles.errorText}>{errors.password}</Text>
+                    )}
+                  </View>
+                  {/* password confirmation field */}
+                  <View style={styles.formGroup}>
+                    <Text style={styles.label}>Confirm Password</Text>
+                    <TextInput
+                      style={styles.input}
+                      placeholder="Confirm password"
+                      placeholderTextColor="#9A8174"
+                      secureTextEntry
+                      value={values.confirmPassword}
+                      onChangeText={handleChange("confirmPassword")}
+                      onBlur={handleBlur("confirmPassword")}
+                    />
+                    {touched.confirmPassword && errors.confirmPassword && (
+                      <Text style={styles.errorText}>{errors.confirmPassword}</Text>
+                    )}
+                  </View>
+                  {/* submit button */}
+                  <Pressable
+                    style={[
+                      styles.submitButton,
+                      !isValid && styles.submitButtonDisabled,
+                    ]}
+                    onPress={() => handleSubmit()}
+                    disabled={!isValid}
+                  >
+                    <Text style={styles.submitText}>SUBMIT</Text>
+                  </Pressable>
+                </>
+              )}
+            </Formik>
+          </ScrollView>
+        </SafeAreaView>
+      </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
   },
   content: {
     paddingHorizontal: 24,
@@ -212,13 +215,13 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     marginTop: 24,
-    backgroundColor: "#050206",
+    backgroundColor: "#9A8174",
     paddingVertical: 16,
     borderRadius: 14,
     alignItems: "center",
   },
   submitButtonDisabled: {
-    backgroundColor: "#3B3B3B",
+    backgroundColor: "#9A8174",
     opacity: 0.5,
   },
   submitText: {
@@ -226,5 +229,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "700",
     letterSpacing: 1,
+  },
+  backgroundImage: {
+    flex: 1,
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: "#FFFFFFCC",
   },
 });
