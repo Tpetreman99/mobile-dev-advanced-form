@@ -9,10 +9,6 @@ export default function Index() {
       resizeMode="cover"
     >
       <View style={s.overlay}>
-        <View style={s.topBar}>
-          <Text style={s.topText}>← HOME</Text>
-          <Text style={s.topText}>FORM NAVIGATION</Text>
-        </View>
 
         <Text style={s.heading}>Welcome</Text>
 
@@ -48,8 +44,8 @@ const s = StyleSheet.create({
     flex: 1,
     backgroundColor: "rgba(255,255,255,0.82)",
     paddingHorizontal: 24,
-    paddingTop: 18,
-    paddingBottom: 32,
+    justifyContent: "flex-start",
+    paddingTop: 120,
   },
 
   topBar: {

@@ -5,25 +5,22 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        headerShown:false,
-        
+        headerShown:false,        
         tabBarActiveTintColor: '#050206',
         tabBarInactiveTintColor: '#3B3B3B',
 
         //bottom navigation bar styling
         tabBarStyle: {
-          backgroundColor: 'transparent',
-          position: 'absolute',
           borderTopWidth: 0,
-          height: 80,
-          paddingBottom: 10,
-          paddingTop: 17,
+          height: 77,
+          paddingBottom: 30,
+          paddingTop: 12,
         },
 
         tabBarLabelStyle: {
-          fontSize: 10,
-          marginTop: 4,
-          paddingBottom: 2,
+          fontSize: 11,
+          marginTop: 6,
+          paddingBottom: 4,
         },
 
         //bottom navigation bar component placement
@@ -44,7 +41,7 @@ export default function TabLayout() {
       name="employee_form" 
       options={{title: 'Employee',
         tabBarIcon: ({focused}) => (
-          <Ionicons name={focused ? "person" : "person-outline"} size={30}/>
+          <Ionicons name={focused ? "briefcase" : "briefcase-outline"} size={30}/>
         )
       }}/>
 
@@ -52,7 +49,7 @@ export default function TabLayout() {
       name="sign-in" 
       options={{title: 'Sign-in',
         tabBarIcon: ({focused}) => (
-          <Ionicons name={focused ? "log-in" : "log-in-outline"} size={30}/>
+          <Ionicons name={focused ? "person-circle" : "person-circle-outline"} size={30}/>
         )
       }}/>
       <Tabs.Screen 

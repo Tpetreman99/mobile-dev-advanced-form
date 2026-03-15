@@ -7,11 +7,12 @@ import {
   TextInput,
   View,
   Pressable,
-  Alert,
+  Alert, ImageBackground
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const EmployeeSchema = Yup.object().shape({
   fullName: Yup.string()
@@ -41,12 +42,19 @@ type FieldName =
 
 export default function EmployeeFormScreen() {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const [focusedField, setFocusedField] = useState<FieldName | null>(null);
 
   return (
+    <ImageBackground
+              source={require("../../assets/images/landingpage.avif")}
+              style={styles.backgroundImage}
+              resizeMode="cover"
+            >
+              <View style={styles.overlay}>
     <SafeAreaView style={styles.container}>
       <ScrollView
-        contentContainerStyle={styles.content}
+        contentContainerStyle={[styles.content, { paddingBottom: insets.bottom + 40 }]}
         showsVerticalScrollIndicator={false}
       >
         <Formik
@@ -221,18 +229,19 @@ export default function EmployeeFormScreen() {
         </Formik>
       </ScrollView>
     </SafeAreaView>
+    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
   },
+
   content: {
     paddingHorizontal: 24,
     paddingTop: 16,
-    paddingBottom: 40,
   },
   topBar: {
     flexDirection: "row",
@@ -280,7 +289,6 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     fontSize: 16,
     color: "#050206",
-    backgroundColor: "#FFFFFF",
   },
   inputFocused: {
     borderBottomColor: "#9A8174",
@@ -296,13 +304,13 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     marginTop: 28,
-    backgroundColor: "#050206",
+    backgroundColor: "#9A8174",
     paddingVertical: 16,
     borderRadius: 14,
     alignItems: "center",
   },
   submitButtonDisabled: {
-    backgroundColor: "#3B3B3B",
+    backgroundColor: "#9A8174",
     opacity: 0.5,
   },
   submitText: {
@@ -310,5 +318,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "700",
     letterSpacing: 1,
+  },
+
+  backgroundImage: {
+    flex: 1,
+  },
+
+  overlay: {
+    flex: 1,
+    backgroundColor: "#FFFFFFCC",
   },
 });
